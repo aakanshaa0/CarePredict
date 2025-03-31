@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+    <link rel="stylesheet" href="error.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container">
+        <h2>Error</h2>
+        <div class="error-message">
+            <p><%= message %></p>
+        </div>
+        <div class="actions">
+            <a href="/" class="btn">Return Home</a>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

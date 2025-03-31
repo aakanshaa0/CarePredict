@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Analysis</title>
+    <link rel="stylesheet" href="/analysis.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="analysis-title">Breast Cancer Risk Assessment</h2>
+        <form action="/analyze-cancer" method="POST" class="medical-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="radius_mean">
+                        <i class="fas fa-ruler"></i> Radius Mean:
+                    </label>
+                    <input type="number" id="radius_mean" name="radius_mean" 
+                           step="0.001" required min="5" max="30">
+                </div>
+                <div class="form-group">
+                    <label for="texture_mean">
+                        <i class="fas fa-text-width"></i> Texture Mean:
+                    </label>
+                    <input type="number" id="texture_mean" name="texture_mean" 
+                           step="0.001" required min="5" max="40">
+                </div>
+                <div class="form-group">
+                    <label for="perimeter_mean">
+                        <i class="fas fa-draw-polygon"></i> Perimeter Mean:
+                    </label>
+                    <input type="number" id="perimeter_mean" name="perimeter_mean" 
+                           step="0.001" required min="50" max="200">
+                </div>
+
+                <div class="form-group">
+                    <label for="area_mean">
+                        <i class="fas fa-border-all"></i> Area Mean:
+                    </label>
+                    <input type="number" id="area_mean" name="area_mean" 
+                           step="1" required min="300" max="2500">
+                </div>
+                <div class="form-group">
+                    <label for="smoothness_mean">
+                        <i class="fas fa-wave-square"></i> Smoothness Mean:
+                    </label>
+                    <input type="number" id="smoothness_mean" name="smoothness_mean" 
+                           step="0.000001" required min="0.05" max="0.25">
+                </div>
+
+                <div class="form-group">
+                    <label for="compactness_mean">
+                        <i class="fas fa-compact-disc"></i> Compactness Mean:
+                    </label>
+                    <input type="number" id="compactness_mean" name="compactness_mean" 
+                           step="0.000001" required min="0.01" max="0.4">
+                </div>
+                <div class="form-group">
+                    <label for="concavity_mean">
+                        <i class="fas fa-chart-line"></i> Concavity Mean:
+                    </label>
+                    <input type="number" id="concavity_mean" name="concavity_mean" 
+                           step="0.000001" required min="0.0" max="0.5">
+                </div>
+                <div class="form-group">
+                    <label for="concave_points_mean">
+                        <i class="fas fa-chart-area"></i> Concave Points Mean:
+                    </label>
+                    <input type="number" id="concave_points_mean" name="concave_points_mean" 
+                           step="0.000001" required min="0.0" max="0.2">
+                </div>
+                <div class="form-group">
+                    <label for="symmetry_mean">
+                        <i class="fas fa-balance-scale"></i> Symmetry Mean:
+                    </label>
+                    <input type="number" id="symmetry_mean" name="symmetry_mean" 
+                           step="0.000001" required min="0.1" max="0.3">
+                </div>
+                <div class="form-group">
+                    <label for="fractal_dimension_mean">
+                        <i class="fas fa-project-diagram"></i> Fractal Dimension Mean:
+                    </label>
+                    <input type="number" id="fractal_dimension_mean" name="fractal_dimension_mean" 
+                           step="0.000001" required min="0.05" max="0.1">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn analyze-btn">
+                    <i class="fas fa-microscope"></i> Analyze Now
+                </button>
+                <a href="/" class="btn cancel-btn">
+                    <i class="fas fa-home"></i> Return Home
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

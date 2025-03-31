@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Header</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./logo.jpg">
+        </div>
+        <nav class="desktop-nav">
+            <h3><a href="/">Home</a></h3>
+            <div class="dropdown">
+                <h3 class="dropdown-btn">Services <i class="fas fa-chevron-down"></i></h3>
+                <ul class="dropdown-menu">
+                    <li><a href="/emergency-care">Emergency Care</a></li>
+                    <li><a href="/specialist-care">Specialist Care</a></li>
+                    <li><a href="/laboratory-services">Laboratory Services</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <h3 class="dropdown-btn">Resources <i class="fas fa-chevron-down"></i></h3>
+                <ul class="dropdown-menu">
+                    <li><a href="/medical-records">Medical Records</a></li>
+                    <li><a href="/insurance-info">Insurance Information</a></li>
+                    <li><a href="/patient-education">Patient Education</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="sidebar">
+            <div class="sidebar-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <nav class="mobile-nav">
+                <h3><a href="/">Home</a></h3>
+                <div class="dropdown">
+                    <h3 class="dropdown-btn">Services <i class="fas fa-chevron-down"></i></h3>
+                    <ul class="dropdown-menu">
+                        <li><a href="/emergency-care">Emergency Care</a></li>
+                        <li><a href="/specialist-care">Specialist Care</a></li>
+                        <li><a href="/laboratory-services">Laboratory Services</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <h3 class="dropdown-btn">Resources <i class="fas fa-chevron-down"></i></h3>
+                    <ul class="dropdown-menu">
+                        <li><a href="/medical-records">Medical Records</a></li>
+                        <li><a href="/insurance-info">Insurance Information</a></li>
+                        <li><a href="/patient-education">Patient Education</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="right-section">
+            <% if (user) { %>
+                <h3 class="log"><a href="/logout">Logout</a></h3>
+            <% } else { %>
+                <h3 class="log"><a href="/login">Login</a></h3>
+            <% } %>
+            <i class="fas fa-moon toggle-theme"></i>
+        </div>
+        <div class="hamburger-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.querySelector(".toggle-theme");
+            const body = document.body;
+
+            body.classList.remove("light-mode");
+            localStorage.setItem("theme", "dark");
+            themeToggle.classList.replace("fa-sun", "fa-moon");
+            themeToggle.addEventListener("click", () => {
+                if (body.classList.contains("light-mode")) {
+                    body.classList.remove("light-mode");
+                    localStorage.setItem("theme", "dark");
+                    themeToggle.classList.replace("fa-sun", "fa-moon");
+                } else {
+                    body.classList.add("light-mode");
+                    localStorage.setItem("theme", "light");
+                    themeToggle.classList.replace("fa-moon", "fa-sun");
+                }
+            });
+
+            const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+            dropdownBtns.forEach(btn => {
+                btn.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    const dropdownMenu = btn.nextElementSibling;
+                    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+                        if (menu !== dropdownMenu) menu.classList.remove("show");
+                    });
+                    dropdownMenu.classList.toggle("show");
+                });
+            });
+            document.addEventListener("click", (event) => {
+                if (!event.target.closest(".dropdown")) {
+                    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+                        menu.classList.remove("show");
+                    });
+                }
+            });
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            const sidebar = document.querySelector(".sidebar");
+            const sidebarClose = document.querySelector(".sidebar-close");
+            hamburgerMenu.addEventListener("click", () => {
+                sidebar.classList.add("active");
+            });
+            sidebarClose.addEventListener("click", () => {
+                sidebar.classList.remove("active");
+            });
+            document.addEventListener("click", (event) => {
+                if (!event.target.closest(".sidebar") && !event.target.closest(".hamburger-menu")) {
+                    sidebar.classList.remove("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #111;
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-button {
+    font-size: 18px;
+    background-color: #ff4444;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.hospitals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hospital-card {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hospital-info {
+    text-align: left;
+}
+
+.hospital-info h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.hospital-info p {
+    font-size: 14px;
+    color: #bbb;
+    margin: 5px 0;
+}
+
+.view-map {
+    font-size: 14px;
+    color: #ff5555;
+    text-decoration: none;
+}
+
+.chat-button {
+    background-color: #fb6060;
+}
+
+.fa-hospital-alt {
+    color: #ff4444;
+    font-size: 24px;
+}
+
+.chat-button {
+    background-color: rgb(176, 43, 43);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+    background-color: rgb(161, 83, 83);
+}
+
+.chat-button i {
+    font-size: 16px;
+}

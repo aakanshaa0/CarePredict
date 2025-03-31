@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Hospitals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="pin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Nearby Hospitals <i class="fas fa-hospital-alt"></i></h1>
+        <div class="hospitals-list">
+            <% if (hospitals.length > 0) { %>
+                <% hospitals.forEach(hospital => { %>
+                    <div class="hospital-card">
+                        <div class="hospital-info">
+                            <h2><%= hospital.name %></h2>
+                            <p>📍 <%= hospital.address %></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=<%= hospital.mapQuery %>" class="view-map" target="_blank">View on map</a>
+                        </div>
+                        <button class="chat-button">
+                            <i class="fas fa-comment-dots"></i> Chat
+                        </button>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No hospitals found for pincode <%= pincode %>.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2 class="tag">Empowering your health, <br> one prediction at a time.</h2>
+                <h3 class="support">24/7 SUPPORT</h3>
+                <div class="Pincode">
+                    <form action="/pincode" method="GET" class="search-form">
+                        <div class="search-bar">
+                            <input type="number" name="pincode" placeholder="Enter Pincode" required>
+                        </div>
+                        </button>
+                    </form>
+                </div>
+                <p class="hero-description">
+                    "HealthLink: Where AI meets care, hospitals are a tap away, <br>
+                    and expert support is always within reach—your health, reimagined."
+                </p>
+            </div>
+        </section>
+        <section class="Disease">
+            <div class="disease-card">
+                <a href="/cardi-info">
+                    <img src="cardio.jpg" alt="Cardiovascular Disease">
+                    <p class="disease-text">Cardiovascular Prediction</p>
+                </a>
+            </div>
+            <div class="disease-card">
+                <a href="/cancer-info">
+                    <img src="cancerai.webp" alt="Cancer Disease">
+                    <p class="disease-text">Cancer Prediction</p>
+                </a>
+            </div>
+        </section>
+        <h1 class="features-title">KEY FEATURES</h1>
+        <section class="features-container">
+            <div class="feature-box">
+                <h2>Early Detection & Prevention</h2>
+                <p>AI analyzes health patterns to identify <br> potential risks before they become serious.</p>
+            </div>
+            <div class="feature-box">
+                <h2>End-to-End Encryption</h2>
+                <p>Protects patient records and communications <br> from unauthorized access.</p>
+            </div>
+            <div class="feature-box">
+                <h2>24/7 Availability</h2>
+                <p>Ensures uninterrupted access to healthcare <br> insights and support.</p>
+            </div>
+        </section>
+        <div class="Last-Section">
+            <h1>Preferred by medical experts and <br>trusted by patients worldwide.</h1>
+            <p>Join thousands of users already benefiting <br>from smarter, seamless healthcare.</p>
+        </div>
+        <div class="Last-Section">
+            <h1>Ready to Elevate Your Healthcare Experience?</h1>
+            <p>Join thousands of users already enjoying smarter, more connected healthcare.<br> Whether you're a patient or a provider, we streamline healthcare to make it faster, simpler, and more effective.</p>
+        </div>
+        <div class="footer-buttons">
+            <button class="get-started">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="contact-us">Contact Us</button>
+        </div>
+    </main>
+    <%-include('partials/footer')%>
+</body>
+</html>

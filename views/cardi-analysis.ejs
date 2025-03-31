@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiovascular Analysis</title>
+    <link rel="stylesheet" href="/analysis.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cardiovascular Analysis</h2>
+        <form action="/analyze" method="POST" class="medical-form">
+            <div class="form-group">
+                <label for="age">Enter Age:</label>
+                <input type="number" id="age" name="age" required min="18" max="120">
+            </div>
+            <div class="form-group">
+                <label for="gender">Enter Gender (1=Male, 0=Female):</label>
+                <input type="number" id="gender" name="gender" required min="0" max="1">
+            </div>
+            <div class="form-group">
+                <label for="height">Enter Height (cm):</label>
+                <input type="number" id="height" name="height" required min="120" max="250">
+            </div>
+            <div class="form-group">
+                <label for="weight">Enter Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required min="30" max="300">
+            </div>
+            <div class="form-group">
+                <label for="ap_hi">Systolic Blood Pressure:</label>
+                <input type="number" id="ap_hi" name="ap_hi" required min="50" max="300">
+            </div>
+            <div class="form-group">
+                <label for="ap_lo">Diastolic Blood Pressure:</label>
+                <input type="number" id="ap_lo" name="ap_lo" required min="30" max="200">
+            </div>
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol Level (1-3):</label>
+                <input type="number" id="cholesterol" name="cholesterol" required min="1" max="3">
+            </div>
+            <div class="form-group">
+                <label for="gluc">Glucose Level (1-3):</label>
+                <input type="number" id="gluc" name="gluc" required min="1" max="3">
+            </div>
+            <button type="submit" class="btn">Analyze</button>
+        </form>
+    </div>
+</body>
+</html>

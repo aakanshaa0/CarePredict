@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cardio Result</title>
+    <link rel="stylesheet" href="/result.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cardiovascular Analysis Result</h2>
+        <div class="result-card <%=prediction>=50?'high-risk':'low-risk'%>">
+            <div class="risk-meter">
+                <div class="risk-percentage">
+                    <%=prediction.toFixed(1)%>
+                </div>
+                <div class="risk-label">
+                    <%=prediction>=50?'High Risk':'Low Risk'%>
+                </div>
+            </div>
+
+            <div class="input-summary">
+                <h3>Your Inputs:</h3>
+                <ul>
+                    <li>Age: <%=age%> years</li>
+                    <li>Gender: <%=originalGender==='1'?'Male':'Female'%></li>
+                    <li>Height: <%=height%> cm</li>
+                    <li>Weight: <%=weight%> kg</li>
+                    <li>BP: <%=ap_hi%>/<%=ap_lo%></li>
+                    <li>Cholesterol: Level <%=cholesterol%></li>
+                    <li>Glucose: Level <%=gluc%></li>
+                </ul>
+            </div>
+
+            <div class="recommendations">
+                <h3>Recommendations:</h3>
+                <% if(prediction>=50){%>
+                    <ul>
+                        <li>🩺 Consult cardiologist within 48 hours</li>
+                        <li>❤️ Monitor BP twice daily</li>
+                        <li>🏃♀️ Start light exercise program</li>
+                        <li>🥗 Begin heart-healthy diet</li>
+                    </ul>
+                <%}else{%>
+                    <ul>
+                        <li>📅 Annual cardiac checkups</li>
+                        <li>🥦 Maintain balanced diet</li>
+                        <li>🚴♂️ 30 mins daily exercise</li>
+                        <li>🚭 Avoid smoking/alcohol</li>
+                    </ul>
+                <%}%>
+            </div>
+        </div>
+        <div class="actions">
+            <a href="/cardi-analysis" class="btn">New Test</a>
+            <a href="/" class="btn">Home</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardio Information</title>
+    <link rel="stylesheet" href="/analysis.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cardiovascular Information</h2>
+        <p>
+            Cardiovascular health refers to the function and condition of the heart and blood vessels. 
+            It includes factors like blood pressure, cholesterol levels, and the risk of heart disease. 
+            Maintaining cardiovascular health is crucial for overall well-being, requiring regular exercise, a balanced diet, and managing stress.
+        </p>
+        <a href="/cardi-analysis" class="btn">Proceed to Analysis</a>
+    </div>
+    <script>
+        const dropdownHeader = document.getElementById('dropdown-header');
+        const dropdownOptions = document.getElementById('dropdown-options');
+        dropdownHeader.addEventListener('click', () => {
+            dropdownOptions.classList.toggle('show');
+        });
+        dropdownOptions.querySelectorAll('li').forEach(option => {
+            option.addEventListener('click', () => {
+                dropdownHeader.querySelector('span').textContent = option.textContent;
+                dropdownOptions.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>

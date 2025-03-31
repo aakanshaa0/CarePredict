@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cancer Result</title>
+    <link rel="stylesheet" href="result.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cancer Risk Assessment</h2>
+        <div class="result-card high-risk">
+            <div class="risk-meter">
+                <div class="risk-percentage">
+                    <%= prediction %>
+                </div>
+                <div class="risk-label">
+                    High Risk
+                </div>
+            </div>
+            <div class="input-summary">
+                <h3>Key Parameters:</h3>
+                <ul>
+                    <li>Radius Mean: 17.990</li>
+                    <li>Texture Mean: 10.380</li>
+                    <li>Perimeter Mean: 122.800</li>
+                    <li>Area Mean: 1001.0</li>
+                </ul>
+            </div>
+        </div>
+        <div class="recommendations">
+            <h3>Recommendations:</h3>
+            <ul>
+                <li>🩺 Consult oncologist immediately</li>
+                <li>📆 Schedule diagnostic mammogram</li>
+                <li>🧪 Consider biopsy evaluation</li>
+                <li>🥗 Increase antioxidant-rich foods</li>
+            </ul>
+        </div>
+        <div class="actions">
+            <a href="/cancer-analysis" class="btn">New Test</a>
+            <a href="/" class="btn">Home</a>
+        </div>
+    </div>
+</body>
+</html>

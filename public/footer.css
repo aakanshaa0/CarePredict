@@ -1,0 +1,120 @@
+/* Footer Styles */
+footer {
+    width: 100%;
+    background-color: transparent;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto;
+}
+footer .logo .fa-solid {
+    font-size: 80px; /* Increased size */
+    color: red; /* Change color to red or any other color */
+    margin-right: 10px; /* Add spacing if needed */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.footer-column .logo img {
+    max-width: 100px;
+    margin: 0 auto 10px auto;
+}
+
+.footer-column p {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 250px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin: 5px 0;
+}
+
+.footer-column p, .footer-column a {
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+}
+
+.emergency {
+    color: rgba(247, 46, 46, 0.696);
+    font-weight: bold;
+}
+
+.social-icons i {
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-emergency {
+    background-color: #980a0a;
+    color: white;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+.footer-emergency a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Light Mode Footer */
+.light-mode footer {
+    background-color: transparent;
+    color: black;
+}
+
+.light-mode footer p,
+.light-mode footer a {
+    color: black !important;
+}
+
+.light-mode .footer-emergency {
+    background-color: #980a0a;
+    color: white;
+}
+
+.light-mode .footer-emergency a {
+    color: white;
+}
+
+a{
+    color:white;
+    text-decoration:none;
+}
+
+a:hover{
+    color:white;
+    text-decoration:underline;
+}
