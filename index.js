@@ -1,50 +1,63 @@
+// Load environment variables from .env file
 require('dotenv').config();
-const express = require('express');
-const session = require('express-session');
-const bcrypt = require('bcrypt');
-const { Pool } = require('pg');
-const app = express();
-const axios = require('axios');
-const { spawn } = require('child_process');
 
-// Middleware
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
+// Import required packages
+const express = require('express');   
+const session = require('express-session'); 
+const bcrypt = require('bcrypt');     
+const { Pool } = require('pg');           
+const app = express();                      
+const axios = require('axios');          
+const { spawn } = require('child_process'); 
+
+// Configure Express middleware
+app.set('view engine', 'ejs');  
+app.use(express.static('public'));        
+app.use(express.urlencoded({ extended: true })); 
+
+// Configure session middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
+    secret: process.env.SESSION_SECRET || 'your-secret-key', 
+    resave: false,                    
+    saveUninitialized: false,         
+    cookie: { secure: false }     
 }));
 
-// Database connection
+// Database connection configuration
 const pool = new Pool({
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    database: process.env.PG_DATABASE
+    user: process.env.PG_USER,           
+    password: process.env.PG_PASSWORD,  
+    host: process.env.PG_HOST,            
+    port: process.env.PG_PORT,           
+    database: process.env.PG_DATABASE     
 });
 
 // Routes
-// Home Route
+// Home Route - Display main page
 app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
-// Signup Route
+// Signup Routes
+// GET - Display signup form
 app.get('/signup', (req, res) => {
     res.render('signup', { error: null });
 });
 
+// POST - Handle signup form submission
 app.post('/signup', async (req, res) => {
     const { email, password, confirmPassword } = req.body;
+    
+    // Check if passwords match
     if (password !== confirmPassword) {
         return res.render('signup', { error: 'Passwords do not match' });
     }
+    
     try {
+        // Hash password for security
         const hashedPassword = await bcrypt.hash(password, 10);
+        
+        // Insert new user into database
         await pool.query(
             'INSERT INTO users (email, password) VALUES ($1, $2)',
             [email, hashedPassword]
@@ -52,6 +65,7 @@ app.post('/signup', async (req, res) => {
         res.redirect('/login');
     } catch (err) {
         console.error(err);
+        // Handle duplicate email error
         if (err.code === '23505') {
             return res.render('signup', { error: 'Email already exists' });
         }
@@ -59,14 +73,17 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Login Route
+// Login Routes
+// GET - Display login form
 app.get('/login', (req, res) => {
     res.render('login', { error: null });
 });
 
+// POST - Handle login form submission
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
+        // Find user by email
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = result.rows[0];
 
@@ -74,11 +91,13 @@ app.post('/login', async (req, res) => {
             return res.render('login', { error: 'User not found' });
         }
 
+        // Verify password
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
             return res.render('login', { error: 'Invalid password' });
         }
 
+        // Set session data
         req.session.userId = user.id;
         req.session.user = user;
 
@@ -89,39 +108,46 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Logout Route
+// Logout Route - Clear session and redirect to login
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
         res.redirect('/login');
     });
 });
 
-// Cardi Route
+// Cardiovascular Disease Routes
+// Display information page
 app.get('/cardi-info', (req, res) => {
     res.render('cardi-info', { user: req.session.user });
 });
 
+// Display analysis form
 app.get('/cardi-analysis', (req, res) => {
     res.render('cardi-analysis');
 });
 
-// Cancer Route
+// Cancer Routes
+// Display analysis form
 app.get('/cancer-analysis', (req, res) => {
     res.render('cancer-analysis');
 });
 
+// Display information page
 app.get('/cancer-info', (req, res) => {
     res.render('cancer-info', { user: req.session.user });
 });
 
+// Handle cardiovascular disease analysis
 app.post('/analyze', (req, res) => {
     console.log("Received input:", req.body);
 
+    // Validate input data
     if (!validateCardioInput(req.body)) {
         console.error("Validation failed for:", req.body);
         return res.status(400).send("Invalid input values");
     }
 
+    // Process input data
     const inputData = {
         age: parseInt(req.body.age),
         gender: req.body.gender === '1' ? 2 : 1,
@@ -134,26 +160,29 @@ app.post('/analyze', (req, res) => {
         originalGender: req.body.gender
     };
 
-    console.log("Processed input:", inputData);
-
+    // Run Python script for prediction
     const pythonProcess = spawn('python', ['cardio_model.py']);
 
+    // Send input data to Python script
     pythonProcess.stdin.write(JSON.stringify(inputData));
     pythonProcess.stdin.end();
 
     let output = '';
     let error = '';
 
+    // Handle Python script output
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();
         console.log("Python stdout:", data.toString());
     });
 
+    // Handle Python script errors
     pythonProcess.stderr.on('data', (data) => {
         error += data.toString();
         console.error("Python stderr:", data.toString());
     });
 
+    // Process Python script completion
     pythonProcess.on('close', (code) => {
         console.log(`Python process exited with code ${code}`);
 
@@ -163,6 +192,7 @@ app.post('/analyze', (req, res) => {
         }
 
         try {
+            // Process prediction result
             const prediction = parseFloat(output.trim());
             if (isNaN(prediction)) {
                 throw new Error("Invalid prediction result");
@@ -181,7 +211,7 @@ app.post('/analyze', (req, res) => {
     });
 });
 
-// Enhanced validation
+// Validate cardiovascular disease input data
 function validateCardioInput(body) {
     const valid = (
         body.age >= 18 && body.age <= 120 &&
@@ -209,7 +239,9 @@ function validateCardioInput(body) {
     return valid;
 }
 
+// Handle cancer analysis
 app.post('/analyze-cancer', (req, res) => {
+    // Process input data
     const inputData = {
         radius_mean: parseFloat(req.body.radius_mean),
         texture_mean: parseFloat(req.body.texture_mean),
@@ -223,26 +255,32 @@ app.post('/analyze-cancer', (req, res) => {
         fractal_dimension_mean: parseFloat(req.body.fractal_dimension_mean)
     };
 
+    // Validate input data
     if (!validateCancerInput(inputData)) {
         return res.status(400).send("Invalid input values");
     }
 
+    // Run Python script for prediction
     const pythonProcess = spawn('python', ['cancer_model.py']);
 
+    // Send input data to Python script
     pythonProcess.stdin.write(JSON.stringify(inputData));
     pythonProcess.stdin.end();
 
     let output = '';
     let error = '';
 
+    // Handle Python script output
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();
     });
 
+    // Handle Python script errors
     pythonProcess.stderr.on('data', (data) => {
         error += data.toString();
     });
 
+    // Process Python script completion
     pythonProcess.on('close', (code) => {
         if (code !== 0 || error) {
             console.error("Cancer analysis failed:", error);
@@ -251,6 +289,7 @@ app.post('/analyze-cancer', (req, res) => {
             });
         }
         try {
+            // Process prediction result
             const prediction = parseFloat(output.trim());
             if (isNaN(prediction)) {
                 throw new Error("Invalid prediction result");
@@ -268,7 +307,7 @@ app.post('/analyze-cancer', (req, res) => {
     });
 });
 
-// Function to validate cancer input data
+// Validate cancer input data
 function validateCancerInput(inputData) {
     return (
         inputData.radius_mean >= 5 && inputData.radius_mean <= 30 &&
@@ -284,8 +323,10 @@ function validateCancerInput(inputData) {
     );
 }
 
+// Find nearby hospitals using pincode
 async function getHospitalsByPincode(pincode) {
     try {
+        // Get coordinates from pincode
         const geocodeResponse = await axios.get(
             `https://nominatim.openstreetmap.org/search?format=json&postalcode=${pincode}&country=India`
         );
@@ -293,6 +334,8 @@ async function getHospitalsByPincode(pincode) {
             throw new Error("Pincode not found");
         }
         const { lat, lon } = geocodeResponse.data[0];
+
+        // Search for hospitals near coordinates
         const overpassQuery = `
             [out:json];
             node["amenity"="hospital"](around:5000, ${lat}, ${lon});
@@ -301,6 +344,8 @@ async function getHospitalsByPincode(pincode) {
         const overpassResponse = await axios.get(
             `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpassQuery)}`
         );
+
+        // Process hospital data
         const hospitals = overpassResponse.data.elements.map(hospital => ({
             name: hospital.tags.name || "Unnamed Hospital",
             address: hospital.tags["addr:full"] || "Address not available",
@@ -313,6 +358,7 @@ async function getHospitalsByPincode(pincode) {
     }
 }
 
+// Handle pincode search
 app.get('/pincode', async (req, res) => {
     const pincode = req.query.pincode;
     const hospitals = await getHospitalsByPincode(pincode);

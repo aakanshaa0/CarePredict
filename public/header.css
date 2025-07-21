@@ -16,9 +16,9 @@ header .logo .fa-solid {
 }
 
 .logo img {
-    width: 80px;
+    width: 50px;
     height: auto;
-    max-height: 60px;
+    max-height: 40px;
 }
 
 .dropdown {
